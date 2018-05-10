@@ -11,7 +11,6 @@ trait Command {
 
 
 class BlockCommand(val cmds: List[Command]) extends Command {
-
   override
   def run() : Unit = {
     cmds.foreach(c => c.run())
@@ -34,7 +33,7 @@ class While(val cond: Expression, val command: Command) extends Command {
     val v = cond.eval().asInstanceOf[BoolValue]
 
     v match {
-      case BoolValue(true) => { command.run(); run(); }
+      case BoolValue(true) => { command.run(); this.run(); }
       case _               => { } 
     }
   }
