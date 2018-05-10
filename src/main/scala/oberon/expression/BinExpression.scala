@@ -51,4 +51,3 @@ class DivideExpression(lhs: Expression, rhs: Expression) extends BinExpression(l
   }
 
 }
-
