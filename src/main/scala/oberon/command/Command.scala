@@ -28,9 +28,10 @@ class Assignment(val id: String, val expression: Expression) extends Command {
 }
 
 class While(val cond: Expression, val command: Command) extends Command {
+
   override
   def run() : Unit = {
-    val v = cond.eval.asInstanceOf[BoolValue]
+    val v = cond.eval().asInstanceOf[BoolValue]
 
     v match {
       case BoolValue(true) => { command.run(); run(); }
@@ -39,10 +40,24 @@ class While(val cond: Expression, val command: Command) extends Command {
   }
 }
 
-class Print(val exp: Expression) extends Command {
+class Print(val expression: Expression) extends Command {
+  
   override
   def run() : Unit = {
-    print(exp.eval())
+    print(expression.eval())
   }
 
+}
+
+class IfThen(val cond: Expression, val command: Command) extends Command {
+  
+  override
+  def run() : Unit = {
+    val v = cond.eval().asInstanceOf[BoolValue]
+
+    v match {
+      case BoolValue(true) => command.run()
+      case BoolValue(false) => { }
+    }
+  }
 }
