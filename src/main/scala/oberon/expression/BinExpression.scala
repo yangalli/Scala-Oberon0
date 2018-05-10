@@ -15,6 +15,17 @@ class AddExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs,
   }
 }
 
+class LeExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs, rhs) {
+
+  override
+  def eval: Value = {
+    val v1 = lhs.eval().asInstanceOf[IntValue].value
+    val v2 = rhs.eval().asInstanceOf[IntValue].value
+
+    return BoolValue(v1 <= v2) 
+  }
+
+}
 class EqExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs, rhs) {
 
   override
@@ -22,8 +33,7 @@ class EqExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs, 
     val v1 = lhs.eval()
     val v2 = rhs.eval()
 
-    val res = v1 == v2
-    return BoolValue(res) 
+    return BoolValue(v1 == v2) 
   }
 
 }
