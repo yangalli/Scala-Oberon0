@@ -8,8 +8,8 @@ class AddExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs,
 
   override
   def eval() : Value = {
-    val v1 : IntValue = lhs.eval().asInstanceOf[IntValue].value
-    val v2 : IntValue = rhs.eval().asInstanceOf[IntValue].value
+    val v1 = lhs.eval().asInstanceOf[IntValue].value
+    val v2 = rhs.eval().asInstanceOf[IntValue].value
 
     return IntValue(v1 + v2)
   }
@@ -70,6 +70,17 @@ class LtExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs, 
 
     return BoolValue(v1 < v2) 
   }
+}
+
+class SubtractExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs, rhs) {
+
+  override
+  def eval() : Value = {
+    val v1 = lhs.eval().asInstanceOf[IntValue].value
+    val v2 = rhs.eval().asInstanceOf[IntValue].value
+
+    return new IntValue(v1 - v2)
+  }
 
 }
 
@@ -104,6 +115,17 @@ class NotEqExpression(lhs: Expression, rhs: Expression) extends BinExpression(lh
     val v2 = rhs.eval()
 
     return new NotExpression(new EqExpression(v1, v2)).eval()
+  }
+
+}
+class DivideExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs, rhs) {
+
+  override
+  def eval() : Value = {
+    val v1 = lhs.eval().asInstanceOf[IntValue].value
+    val v2 = rhs.eval().asInstanceOf[IntValue].value
+
+    return new IntValue(v1 / v2)
   }
 
 }
