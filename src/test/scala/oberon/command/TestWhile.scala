@@ -38,10 +38,12 @@ class TestWhile extends FlatSpec with Matchers with GivenWhenThen with BeforeAnd
     a2.run()
     w1.run()
 
-    val res = lookup("soma")
+    lookup("soma") should be (Some(IntValue(55))) 
+
+    /* val res = lookup("soma")
     res match {
       case Some(v) => v.eval() should be (IntValue(55))
       case _       => 5 should be (1)  
-    }
+    } */
   }
 }
