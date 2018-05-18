@@ -118,6 +118,7 @@ class NotEqExpression(lhs: Expression, rhs: Expression) extends BinExpression(lh
   }
 
 }
+
 class DivideExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs, rhs) {
 
   override

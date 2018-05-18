@@ -7,6 +7,13 @@ trait Command {
   def run() : Unit 
 }
 
+case class EmptyCommand() extends Command {
+
+  override
+  def run() : Unit = {
+    
+  }
+}
 
 class BlockCommand(val cmds: List[Command]) extends Command {
 
