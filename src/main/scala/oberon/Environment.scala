@@ -8,7 +8,9 @@ import oberon.expression.Value
 import oberon.expression.Expression
 
 object Environment {
-  var stack = new Stack[Map[String, Value]] () 
+
+  var stack = new Stack[Map[String, Value]] ()
+  var define = new HashMap[String, FuncDef]
 
   def push() {
     stack.push(new HashMap[String, Value]())
@@ -27,5 +29,8 @@ object Environment {
 
   def lookup(id: String) : Option[Value] =
     if(stack.isEmpty) None else Some(stack.top(id))
-  
+
+  def lookupDef(id: String) : FuncDef = define(id)
+
+  def clear() : Unit = { stack.clear() } 
 }

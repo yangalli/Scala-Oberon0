@@ -1,0 +1,9 @@
+Expressions:
+    +, *, <=, ==, !=, !, >, <, -, &&, /, função
+    
+    falta: >=, &, ||
+    
+Commandos:
+    while, ifthen, ifthenelse;
+    
+    falta: procedimento?
