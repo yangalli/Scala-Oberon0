@@ -1,8 +1,6 @@
 Expressions:
     +, *, <=, ==, !=, !, >, <, -, &&, /, função
     
-    falta: >=, &, ||
-    
 Commandos:
     while, ifthen, ifthenelse;
     
