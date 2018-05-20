@@ -7,7 +7,7 @@ import org.scalatest.GivenWhenThen
 
 class TestOrExpression extends FlatSpec with Matchers with GivenWhenThen {
 
-  behavior of "Or expression"
+  behavior of "An Or expression"
 
   it should "return value true in Or(BoolValue(false), BoolValue(false))" in {
     val v_false = BoolValue(false)

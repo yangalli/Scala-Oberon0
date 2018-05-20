@@ -3,14 +3,12 @@ package oberon.expression
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 import org.scalatest.GivenWhenThen
-import org.scalatest.BeforeAndAfter
 
+class TestNotEqExpression extends FlatSpec with Matchers with GivenWhenThen {
 
-class TestNotEqExpression extends FlatSpec with Matchers with GivenWhenThen with BeforeAndAfter {
+  behavior of "A Not Equal Expression"
 
-  behavior of "an not eq expression"
-
-  it should "return value true in NotEq(IntValue(5), Add(IntValue(3), IntValue(2))))" in {
+  it should "return value false in NotEqExpression(IntValue(5), IntValue(5))" in {
     val val5 = IntValue(5)
     val val3 = IntValue(3)
     val val2 = IntValue(2)  
@@ -20,7 +18,7 @@ class TestNotEqExpression extends FlatSpec with Matchers with GivenWhenThen with
     eq.eval() should be (BoolValue(false)) 
   }
 
-  it should "return value false in NotEq(IntValue(5), Add(IntValue(3), IntValue(3))))" in {
+  it should "return value true in NotEqExpression(IntValue(5), IntValue(6))" in {
     val val5 = IntValue(5)
     val val3 = IntValue(3)
     val add  = new AddExpression(val3, val3) 
@@ -28,6 +26,5 @@ class TestNotEqExpression extends FlatSpec with Matchers with GivenWhenThen with
 
     eq.eval() should be (BoolValue(true)) 
   }
-
 
 }

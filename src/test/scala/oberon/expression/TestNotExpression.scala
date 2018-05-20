@@ -3,12 +3,10 @@ package oberon.expression
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 import org.scalatest.GivenWhenThen
-import org.scalatest.BeforeAndAfter
 
+class TestNotExpression extends FlatSpec with Matchers with GivenWhenThen {
 
-class TestNotExpression extends FlatSpec with Matchers with GivenWhenThen with BeforeAndAfter {
-
-  behavior of "an not expression"
+  behavior of "A Not Expression"
 
   it should "return value true in Not(BoolValue(false))" in {
     val valf = BoolValue(false)

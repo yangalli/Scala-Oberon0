@@ -3,12 +3,10 @@ package oberon.expression
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 import org.scalatest.GivenWhenThen
-import org.scalatest.BeforeAndAfter
 
+class TestGeExpression extends FlatSpec with Matchers with GivenWhenThen {
 
-class TestGeExpression extends FlatSpec with Matchers with GivenWhenThen with BeforeAndAfter {
-
-  behavior of "a greater or equal expression"
+  behavior of "A Greater or Equal Than Expression"
 
   it should "return value true in GeExpression(IntValue(5), IntValue(3))" in {
     val val5 = IntValue(5)

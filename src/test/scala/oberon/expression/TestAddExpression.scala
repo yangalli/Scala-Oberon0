@@ -3,14 +3,12 @@ package oberon.expression
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 import org.scalatest.GivenWhenThen
-import org.scalatest.BeforeAndAfter
 
+class TestAddExpression extends FlatSpec with Matchers with GivenWhenThen {
 
-class TestAddExpression extends FlatSpec with Matchers with GivenWhenThen with BeforeAndAfter {
+  behavior of "An Add Expression"
 
-  behavior of "an add expressions"
-
-  it should "return value 15 in Add(IntValue(5), IntValue(10))" in {
+  it should "return value 15 in AddExpression(IntValue(5), IntValue(10))" in {
     val val5  = IntValue(5)
     val val10 = IntValue(10)
     val add   = new AddExpression(val5, val10) 
@@ -18,11 +16,19 @@ class TestAddExpression extends FlatSpec with Matchers with GivenWhenThen with B
     add.eval() should be (IntValue(15)) 
   }
 
-  it should "lead to an exception in Add(IntValue(5), BoolValue(False))" in {
+  it should "return a negative number in AddExpression(IntValue(5), IntValue(-10))" in {
     val val5 = IntValue(5)
-    val valf = BoolValue(false)
-    val add = new AddExpression(val5, valf)
+    val valneg10 = IntValue(-10)
+    val add = new AddExpression(val5, valneg10)
 
-   // add.eval() should be (IntValue(5))
+    add.eval() should be (IntValue(-5))
   }
+
+  // it should "lead to an exception in AddExpression(IntValue(5), BoolValue(False))" in {
+  //   val val5 = IntValue(5)
+  //   val valf = BoolValue(false).asInstanceOf[IntValue].value
+  //   val add = new AddExpression(val5, valf)
+
+  //   add.eval() should be (IntValue(5))
+  // }
 }

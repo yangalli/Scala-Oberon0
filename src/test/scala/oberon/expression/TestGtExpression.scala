@@ -3,14 +3,12 @@ package oberon.expression
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 import org.scalatest.GivenWhenThen
-import org.scalatest.BeforeAndAfter
 
+class TestGtExpression extends FlatSpec with Matchers with GivenWhenThen {
 
-class TestGtExpression extends FlatSpec with Matchers with GivenWhenThen with BeforeAndAfter {
+  behavior of "A Greater Than expression"
 
-  behavior of "a gt expression"
-
-  it should "return value false in Gt(IntValue(5), Add(IntValue(3), IntValue(2))))" in {
+  it should "return value false in Gt(IntValue(5), Add(IntValue(3), IntValue(2))" in {
     val val5 = IntValue(5)
     val val3 = IntValue(3)
     val val2 = IntValue(2)  
@@ -20,7 +18,7 @@ class TestGtExpression extends FlatSpec with Matchers with GivenWhenThen with Be
     eq.eval() should be (BoolValue(false)) 
   }
 
-  it should "return value false in Gt(IntValue(5), Add(IntValue(3), IntValue(3))))" in {
+  it should "return value false in Gt(IntValue(5), Add(IntValue(3), IntValue(3))" in {
     val val5 = IntValue(5)
     val val3 = IntValue(3)
     val add  = new AddExpression(val3, val3) 
@@ -29,7 +27,7 @@ class TestGtExpression extends FlatSpec with Matchers with GivenWhenThen with Be
     eq.eval() should be (BoolValue(false)) 
   }
 
-  it should "return value true in Gt(IntValue(10), Add(IntValue(3), IntValue(3))))" in {
+  it should "return value true in Gt(IntValue(10), Add(IntValue(3), IntValue(3))" in {
     val val10 = IntValue(10)
     val val3 = IntValue(3)
     val add  = new AddExpression(val3, val3) 
