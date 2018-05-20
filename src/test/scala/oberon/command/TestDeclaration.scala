@@ -11,13 +11,14 @@ import oberon.expression._
 
 class TestDeclaration extends FlatSpec with Matchers with GivenWhenThen with BeforeAndAfter {
 
-  behavior of "an declaration command"
+  behavior of "A Declaration Command"
 
   before {
     clear()
   }
 
-  it should "the environment must have an Declaration x -> Undefined" in { 
+  it should "be able to declare and Undefined variable x -> Undefined" in { 
+    // x ...(Undefined)
     val assignment = new Declaration("x")
 
     assignment.run()
