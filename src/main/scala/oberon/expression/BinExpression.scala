@@ -26,6 +26,17 @@ class MultExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs
   }
 }
 
+class ModExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs, rhs) {
+
+  override
+  def eval() : Value = {
+    val v1 = lhs.eval().asInstanceOf[IntValue].value
+    val v2 = rhs.eval().asInstanceOf[IntValue].value
+
+    return IntValue(v1 % v2)
+  }
+}
+
 class LeExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs, rhs) {
 
   override

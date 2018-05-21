@@ -87,11 +87,3 @@ class IfThenElse(val cond: Expression, val command1: Command, val command2: Comm
     }
   }
 }
-
-class ReadBool() extends Command {
-
-  override
-  def run() : Unit = {
-    scala.io.StdIn.readBoolean()
-  }
-}

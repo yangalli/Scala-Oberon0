@@ -25,7 +25,7 @@ class TestIfThen extends FlatSpec with Matchers with GivenWhenThen with BeforeAn
     // x <= x + 1
     val cmd = new Assignment("x", new AddExpression(new VarRef("x"), IntValue(1)))
     // if (x > 10) 
-    //   then x <= x + 1 -> x = 15 + 1 = 16   
+    //   then x := x + 1 -> x = 15 + 1 = 16   
     val ift = new IfThen(cond, cmd)
 
     assignment.run()
