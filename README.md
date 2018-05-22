@@ -1,6 +1,10 @@
 # Scala-Oberon0
 An implementation of the Oberon 0 programming language using Scala.
 
+
+Yan Galli - 160149207
+Antonio Carlos - 160112745
+
 ## Implementation
 
 ### Commands and Expressions
@@ -13,5 +17,3 @@ An implementation of the Oberon 0 programming language using Scala.
  The library used to test the implementation of the Oberon0 language was ScalaTest. The tests are in /src/test.
 
 
-Yan Galli - 160149207
-Antonio Carlos - 160112745
