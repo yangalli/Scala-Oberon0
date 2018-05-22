@@ -32,14 +32,6 @@ class Assignment(val id: String, val expression: Expression) extends Command {
 
 }
 
-class Declaration(val id: String) extends Command {
-
-  override
-  def run() : Unit = {
-    map(id, Undefined())
-  }
-}
-
 class While(val cond: Expression, val command: Command) extends Command {
   
   override
