@@ -15,24 +15,25 @@ class TestProcedure extends FlatSpec with Matchers with GivenWhenThen {
 
   behavior of "A Procedure"
   
-  it should "lookup 3 when we call the function: get(1,2)" in {
+  it should "lookup 3 when we call the procedure: sum(1,2)" in {
     //Procedimento
     
-    val r1 = new AddExpression(new VarRef("x"), new VarRef("y"))
-    /* val cmd = new Print(r1) */
-    val cmd = new Assignment("a", r1)
-    val d1 = new ProcDef("get", List("x", "y"), cmd)
+    val a1  = new Declaration("res")
+    val a2  = new AddExpression(new VarRef("x"), new VarRef("y"))
+    val cmd = new Assignment("res", a2)
+    val d1  = new ProcDef("sum", List("x", "y"), cmd)
 
     /*********************************************
-    *          def get(x := 1, y := 2) = {       *
-    *             a <=(x + y);                   *               
+    *          def sum(x := 1, y := 2) = {       *
+    *             res := x + y                   *               
     *          }                                 *
     **********************************************/
     
-    val f1 = new proc("get", List(IntValue(1), IntValue(2)))
+    val p1 = new proc("sum", List(IntValue(1), IntValue(2)))
+    a1.run()
+    p1.run()
 
-    f1.run()
-    lookup("a") should be (Some(IntValue(3))) 
+    lookup("res") should be (Some(IntValue(3))) 
   }
 
 }

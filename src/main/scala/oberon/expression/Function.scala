@@ -11,13 +11,22 @@ class func(nome: String, args: List[Expression]) extends Expression {
     
     val define = lookupDef(nome)
 
+    push()
     args.foreach(a => new Assignment(define.args(args.indexOf(a)), a).run())
+    define.command.run()
 
+    /* val res = define.command.tail().eval
+    pop()
+    res */
+
+    var res: Value = Undefined()
     define.command match {
-      case Some(c) => c.run()
-      case None => { }
+      case Return(c) => res = c.eval()
+      case c => c.run()
     }
 
-    define._return.eval()
+    pop
+    res
+
   }
 }

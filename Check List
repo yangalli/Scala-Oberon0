@@ -1,7 +1,0 @@
-Expressions:
-    +, *, <=, ==, !=, !, >, <, -, &&, /, função
-    
-Commandos:
-    while, ifthen, ifthenelse;
-    
-    falta: procedimento?

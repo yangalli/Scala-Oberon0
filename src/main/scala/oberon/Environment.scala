@@ -25,7 +25,9 @@ object Environment {
     if(stack.isEmpty) {
       push()
     }
-    stack.top += (id -> value) 
+
+    if(stack.head.contains(id)) stack.head += (id -> value) 
+    else stack.top += (id -> value) 
   }
 
   def lookup(id: String) : Option[Value] =

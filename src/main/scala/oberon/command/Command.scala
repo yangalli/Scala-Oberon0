@@ -7,7 +7,7 @@ trait Command {
   def run() : Unit 
 }
 
-case class EmptyCommand() extends Command {
+case class Return(val expression: Expression) extends Command {
 
   override
   def run() : Unit = {
