@@ -5,24 +5,22 @@ import oberon.expression._
 import oberon.Environment._
 
 class func(nome: String, args: List[Expression]) extends Expression {
-  
+
   override
   def eval() : Value = {
-    
+
     val define = lookupDef(nome)
 
     push()
     args.foreach(a => new Assignment(define.args(args.indexOf(a)), a).run())
+    //Executa todos os comandos
     define.command.run()
 
-    /* val res = define.command.tail().eval
-    pop()
-    res */
-
+    //procura o return
     var res: Value = Undefined()
     define.command match {
-      case Return(c) => res = c.eval()
-      case c => c.run()
+      case Return(e) => res = e.eval()
+      case c: BlockCommand => res = c.cmds.last.asInstanceOf[Return].expression.eval()
     }
 
     pop

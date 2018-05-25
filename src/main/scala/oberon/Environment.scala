@@ -5,7 +5,6 @@ import scala.collection.mutable.Map
 import scala.collection.mutable.HashMap
 
 import oberon.expression.Value
-import oberon.expression.Expression
 
 object Environment {
 
@@ -26,12 +25,13 @@ object Environment {
       push()
     }
 
-    if(stack.head.contains(id)) stack.head += (id -> value) 
+    //last = variaveis globais
+    if(stack.last.contains(id)) stack.last += (id -> value)
     else stack.top += (id -> value) 
   }
 
   def lookup(id: String) : Option[Value] =
-    if(stack.isEmpty) None else Some(stack.top(id))
+    if(stack.isEmpty) None else stack.top.lift(id)
 
   def lookupDef(id: String) : FuncDef = define(id)
 
