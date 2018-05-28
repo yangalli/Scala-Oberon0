@@ -10,10 +10,11 @@ class proc(nome: String, args: List[Expression]) extends Command {
   def run() : Unit = {
     
     val defineProc = lookupProc(nome)
-  
+
     push()
     args.foreach(a => new Assignment(defineProc.args(args.indexOf(a)), a).run()) //for
     defineProc.command.run()
+    println(lookup("res"))
     pop()
 
   }

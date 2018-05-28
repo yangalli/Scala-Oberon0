@@ -22,6 +22,7 @@ class TestProcedure extends FlatSpec with Matchers with GivenWhenThen {
     val a2  = new AddExpression(new VarRef("x"), new VarRef("y"))
     val cmd = new Assignment("res", a2)
     val d1  = new ProcDef("sum", List("x", "y"), cmd)
+    
 
     /*********************************************
     *          def sum(x := 1, y := 2) = {       *

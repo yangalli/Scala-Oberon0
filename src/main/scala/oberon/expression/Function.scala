@@ -13,20 +13,20 @@ class func(nome: String, args: List[Expression]) extends Expression {
 
     push()
     args.foreach(a => new Assignment(define.args(args.indexOf(a)), a).run())
+    
     define.command.run()
-
-    /* val res = define.command.tail().eval
-    pop()
-    res */
-
     var res: Value = Undefined()
-    define.command match {
-      case Return(c) => res = c.eval()
-      case c => c.run()
-    }
+    define.command.cmds.last match {
 
+      case Return(c) => res = c.eval
+      case _ => { }
+    }
     pop
-    res
+    res 
+
+
+
+    /* define._return.expression.eval() */
 
   }
 }
