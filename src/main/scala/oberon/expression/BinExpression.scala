@@ -1,8 +1,8 @@
 package oberon.expression
 
-abstract class BinExpression(val lhs: Expression, val rhs: Expression) extends Expression {
+import oberon.visitor.Visitor
 
-}
+abstract class BinExpression(val lhs: Expression, val rhs: Expression) extends Expression { }
 
 class AddExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs, rhs) {
 
@@ -12,6 +12,18 @@ class AddExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs,
     val v2 : IntValue = rhs.eval().asInstanceOf[IntValue]
 
     return new IntValue(v1.value + v2.value)
+  }
+
+  override
+  def calculateType() : Type = {
+    val t1 = lhs.calculateType()
+    val t2 = rhs.calculateType()
+
+    return if(t1 == TInt() && t2 == TInt()) TInt() else TUndefined()
+  }
+
+  override def accept(v : Visitor) {
+    v.visit(this) 
   }
 }
 
@@ -25,6 +37,18 @@ class LeExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs, 
     return BoolValue(v1 <= v2) 
   }
 
+  override
+  def calculateType() : Type = {
+    val t1 = lhs.calculateType()
+    val t2 = rhs.calculateType()
+
+    return if(t1 == TInt() && t2 == TInt()) TBool() else TUndefined()
+  }
+
+  override def accept(v : Visitor) {
+    v.visit(this) 
+  }
+
 }
 class EqExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs, rhs) {
 
@@ -33,7 +57,19 @@ class EqExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs, 
     val v1 = lhs.eval()
     val v2 = rhs.eval()
 
-    return BoolValue(v1 == v2) 
+    return BoolValue(v1 == v2)
+  }
+
+  override
+  def calculateType() : Type = {
+    val t1 = lhs.calculateType()
+    val t2 = rhs.calculateType()
+
+    return if(t1 == t2) TBool() else TUndefined()
+  }
+
+  override def accept(v : Visitor) {
+    v.visit(this) 
   }
 
 }
