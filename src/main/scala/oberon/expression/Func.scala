@@ -12,6 +12,7 @@ class Func(nome: String, args: List[Expression]) extends Expression {
   override
   def eval() : Value = {
 
+    // defines the scope by the function name
     val define = lookupDef(nome)
 
     push()
@@ -23,15 +24,16 @@ class Func(nome: String, args: List[Expression]) extends Expression {
       new Assignment(variable, args(i)).run()
     }
 
-
-
     //Executa todos os comandos
     define.command.run()
 
-    //procura o return
+    // search for return
     var res: Value = Undefined()
     define.command match {
+      // if there is a Return in the scope, then it's expression is evaluated
       case Return(e) => res = e.eval()
+      // if there is a BlockCommmand in the scope of the function, the Return is the last command
+      // in the Stack pile, and it's expression is evaluated as an instance of Return
       case c: BlockCommand => res = c.cmds.last.asInstanceOf[Return].expression.eval()
     }
 
