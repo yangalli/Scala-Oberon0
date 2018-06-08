@@ -1,10 +1,13 @@
 package oberon
 
+import oberon.visitor.Visitable
+import oberon.visitor.Visitor
+
 import oberon.command._
 import oberon.expression._
 import oberon.Environment._
 
-class func(nome: String, args: List[Expression]) extends Expression {
+class Func(nome: String, args: List[Expression]) extends Expression {
 
   override
   def eval() : Value = {
@@ -12,7 +15,16 @@ class func(nome: String, args: List[Expression]) extends Expression {
     val define = lookupDef(nome)
 
     push()
-    args.foreach(a => new Assignment(define.args(args.indexOf(a)), a).run())
+    //args.foreach(a._1 => new Assignment(define.args(args.indexOf(a)), a).run())
+    for (i <- 0 until args.size) {
+
+      val(variable, tipo) = define.args(i)
+
+      new Assignment(variable, args(i)).run()
+    }
+
+
+
     //Executa todos os comandos
     define.command.run()
 
@@ -26,5 +38,12 @@ class func(nome: String, args: List[Expression]) extends Expression {
     pop
     res
 
+  }
+  
+  override
+  def calculateType() : Type = ???
+
+  override def accept(v : Visitor) {
+    v.visit(this) 
   }
 }
