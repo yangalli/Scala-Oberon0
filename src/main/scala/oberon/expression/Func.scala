@@ -43,7 +43,32 @@ class Func(nome: String, args: List[Expression]) extends Expression {
   }
   
   override
-  def calculateType() : Type = ???
+  def calculateType() : Type = {
+
+    // defines the scope by the function name
+    val define = lookupDef(nome)
+
+    for (i <- 0 until args.size) {
+      val(variable, tipo) = define.args(i)
+      if (tipo != args(i).calculateType()) return TUndefined()
+      //(variable, args(i)).run()
+
+    }
+    var res: Value = Undefined()
+    define.command match {
+      // if there is a Return in the scope, then it's expression is evaluated
+      case e: Return => {
+       if (!e.typeCheck()) return TUndefined()
+       else return e.expression.calculateType()
+      } 
+      // if there is a BlockCommmand in the scope of the function, the Return is the last command
+      // in the Stack pile, and it's expression is evaluated as an instance of Return
+      case c: BlockCommand => {
+        if (!c.cmds.last.asInstanceOf[Return].typeCheck()) return TUndefined()
+        else return c.cmds.last.asInstanceOf[Return].expression.calculateType()
+      }
+    }
+  }
 
   override def accept(v : Visitor) {
     v.visit(this) 

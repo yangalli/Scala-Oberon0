@@ -8,7 +8,7 @@ import org.scalatest.BeforeAndAfter
 import oberon.Environment._
 import oberon.command._
 import oberon.ProcDef
-import oberon.proc
+import oberon.Proc
 
 
 class TestProcedure extends FlatSpec with Matchers with GivenWhenThen with BeforeAndAfter {
@@ -25,7 +25,7 @@ class TestProcedure extends FlatSpec with Matchers with GivenWhenThen with Befor
     val a1  = new Declaration("res")
     val a2  = new AddExpression(new VarRef("x"), new VarRef("y"))
     val cmd = new Assignment("res", a2)
-    val d1  = new ProcDef("sum", List("x", "y"), cmd)
+    val d1  = new ProcDef("sum", List(("x", TInt()), ("y", TInt())), cmd)
 
     /*********************************************
     *          def sum(x := 1, y := 2) = {       *
@@ -33,7 +33,7 @@ class TestProcedure extends FlatSpec with Matchers with GivenWhenThen with Befor
     *          }                                 *
     **********************************************/
     
-    val p1 = new proc("sum", List(IntValue(1), IntValue(2)))
+    val p1 = new Proc("sum", List(IntValue(1), IntValue(2)))
     a1.run()
     p1.run()
 

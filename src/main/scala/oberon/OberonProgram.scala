@@ -15,7 +15,7 @@ class OberonProgram(val variables: List[String], val procDef: List[ProcDef], val
   }
 
   override
-  def tc() : Boolean = cmd.tc()
+  def typeCheck() : Boolean = cmd.typeCheck()
 
   override def accept(v : Visitor) {
     v.visit(this) 

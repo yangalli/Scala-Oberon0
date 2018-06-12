@@ -8,7 +8,7 @@ import oberon.expression._
 
 trait Command extends Visitable {
   def run() : Unit
-  def tc()  : Boolean  // a type checker for commands. 
+  def typeCheck() : Boolean 
 }
 
 case class Return(val expression: Expression) extends Command {
@@ -16,9 +16,9 @@ case class Return(val expression: Expression) extends Command {
   override
   def run() : Unit = { }
 
-  // o tc deve ser feito com base no tipo de saida da funcao
+  // o typeCheck deve ser feito com base no tipo de saida da funcao
   override
-  def tc() : Boolean = expression.typeCheck()
+  def typeCheck() : Boolean = expression.typeCheck()
 
   override def accept(v : Visitor) {
     v.visit(this) 
@@ -33,7 +33,7 @@ class BlockCommand(val cmds: List[Command]) extends Command {
   }
 
   override
-  def tc() : Boolean = cmds.forall(c => c.tc())
+  def typeCheck() : Boolean = cmds.forall(c => c.typeCheck())
 
   override def accept(v : Visitor) {
     v.visit(this) 
@@ -48,7 +48,7 @@ class Assignment(val id: String, val expression: Expression) extends Command {
   }
 
   override
-  def tc() : Boolean = expression.typeCheck()
+  def typeCheck() : Boolean = expression.typeCheck()
 
   override def accept(v : Visitor) {
     v.visit(this) 
@@ -67,7 +67,7 @@ class While(val cond: Expression, val command: Command) extends Command {
     }
   }
 
-  def tc() : Boolean = cond.calculateType() == TBool() && command.tc()
+  def typeCheck() : Boolean = cond.calculateType() == TBool() && command.typeCheck()
 
   override def accept(v : Visitor) {
     v.visit(this) 
@@ -82,7 +82,7 @@ class Print(val expression: Expression) extends Command {
   }
 
   override
-  def tc() : Boolean = true
+  def typeCheck() : Boolean = true
 
   override def accept(v : Visitor) {
     v.visit(this) 
@@ -101,7 +101,7 @@ class IfThen(val cond: Expression, val command: Command) extends Command {
     }
   }
 
-  def tc() : Boolean = cond.calculateType() == TBool() && command.tc()
+  def typeCheck() : Boolean = cond.calculateType() == TBool() && command.typeCheck()
 
   override def accept(v : Visitor) {
     v.visit(this) 
@@ -120,7 +120,7 @@ class IfThenElse(val cond: Expression, val command1: Command, val command2: Comm
     }
   }
 
-  def tc() : Boolean = cond.calculateType() == TBool() && command1.tc() && command2.tc()
+  def typeCheck() : Boolean = cond.calculateType() == TBool() && command1.typeCheck() && command2.typeCheck()
 
   override def accept(v : Visitor) {
     v.visit(this) 
