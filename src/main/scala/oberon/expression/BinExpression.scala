@@ -268,7 +268,7 @@ class OrExpression(lhs: Expression, rhs: Expression) extends BinExpression(lhs, 
 
 }
 
-class NotExpression(expression: Expression) extends Expression {
+class NotExpression(val expression: Expression) extends Expression {
 
   override
   def eval() : Value = {
