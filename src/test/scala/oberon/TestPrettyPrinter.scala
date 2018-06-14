@@ -5,17 +5,19 @@ import org.scalatest.Matchers
 import org.scalatest.GivenWhenThen
 import org.scalatest.BeforeAndAfter
 
-import oberon.expression.IntValue
-import oberon.expression.BoolValue
-import oberon.expression.AddExpression
 import oberon.expression._
 import oberon.command._
+import oberon.Environment.clear
 
 import oberon.visitor.PrettyPrinter
 
 class TestPrettyPrinter extends FlatSpec with Matchers with GivenWhenThen with BeforeAndAfter {
 
   behavior of "a pretty printer"
+
+  before {
+    clear()
+  }
 
   it should "print \"(5 + 10)\" when we call accept in such an expression" in {
     val val5  = IntValue(5)
@@ -97,4 +99,42 @@ class TestPrettyPrinter extends FlatSpec with Matchers with GivenWhenThen with B
 
     pp.str should be ("if(x = 15 > 10){var x = (x = 15 + 1)}")
   }
+
+  it should "print \"FuncDef\" when we call accept in a definition" in {
+
+    val r1 = new AddExpression(new VarRef("x"), new VarRef("y"))
+    
+    val d1 = new FuncDef("sum", List(("x", TInt()), ("y", TInt())), Return(r1))
+
+    /*********************************************
+    *          def sum(x := 1, y := 2) = {       *
+    *            return x + y;                   *               
+    *          }                                 *
+    **********************************************/
+    
+    //val f1 = new Func("sum", List(IntValue(1), IntValue(2)))
+
+    val pp = new PrettyPrinter()
+    d1.accept(pp)
+
+    pp.str should be ("functionsum(x,y){return (x = undefined + y = undefined)}")
+
+    //f1.accept(pp)
+    
+  }
+
+  it should "print \"Block command\" when we call accept in a definition" in {
+
+    val r1 = new AddExpression(new VarRef("x"), new VarRef("y"))
+    val a1 = new Assignment("x", new AddExpression(new VarRef("x"), IntValue(1)))
+    val b1 = new BlockCommand(List(a1, Return(r1)))
+
+    val pp = new PrettyPrinter()
+    b1.accept(pp)
+
+    pp.str should be ("var x = (x = undefined + 1)\nreturn (x = undefined + y = undefined)\n")
+    
+  }
+
+  
 }

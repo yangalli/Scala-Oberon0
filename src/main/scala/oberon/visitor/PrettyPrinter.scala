@@ -4,7 +4,10 @@ import oberon.expression._
 import oberon.command._
 import oberon.OberonProgram
 import oberon.Proc
+import oberon.ProcDef
 import oberon.Func
+import oberon.FuncDef
+import oberon.Environment._
 
 
 class PrettyPrinter extends Visitor {
@@ -90,10 +93,12 @@ class PrettyPrinter extends Visitor {
   def visit(e: VarRef): Unit = { 
     val exp = visitExp(new VarRef(e.id).eval())
     str = e.id.toString + " = " + exp
+    //para ficar melhor tem que mudar aqui
+    //mostar so a variavel ou so o valor ?
   }
 
   def visit(c: BlockCommand)  : Unit = { 
-    c.cmds.foreach(cmd => str += visitCommand(cmd) + " ")
+    c.cmds.foreach(cmd => str += visitCommand(cmd) + "\n")
   }
 
   def visit(c: Assignment): Unit = { 
@@ -129,16 +134,56 @@ class PrettyPrinter extends Visitor {
     str = "return " + exp
   }
 
-  def visit(e: Func): Unit = ??? /* {
-    val define = lookupDef(e.nome)
-    str = "function" + define.nome + "(" + 
-    for(i <- 0 until define.args.size-1) {
-      define.args(i) + ","
-    } + ")" + "{" +  + "}" 
-  } */
-
-  def visit(e: Proc): Unit = {
+  def visit(d: FuncDef): Unit = {
     
+    var strArgs = ""
+    val command = visitCommand(d.command)
+
+    for(i <- 0 until d.args.size-1) {
+      strArgs += d.args(i)._1 + ","
+    }
+    strArgs += d.args(d.args.size-1)._1
+
+    str = "function" + d.nome + "(" + strArgs + ")" + "{" + command + "}" 
+  }
+
+  def visit(e: Func): Unit = {
+    val define = lookupDef(e.nome)
+    var strArgs = ""
+    val command = visitCommand(define.command)
+
+    for(i <- 0 until define.args.size-1) {
+      strArgs += define.args(i)._1 + ","
+    }
+    strArgs += define.args(define.args.size-1)._1
+
+    str = "function" + define.nome + "(" + strArgs + ")" + "{" + command + "}"
+  }
+
+  def visit(c: Proc): Unit = {
+    //igual ao procDef
+    val define = lookupProc(c.nome)
+    var strArgs = ""
+    val command = visitCommand(define.command)
+
+    for(i <- 0 until define.args.size-1) {
+      strArgs += define.args(i)._1 + ","
+    }
+    strArgs += define.args(define.args.size-1)._1
+
+    str = "function" + define.nome + "(" + strArgs + ")" + "{" + command + "}"
+  }
+
+  def visit(d: ProcDef): Unit = {
+    var strArgs = ""
+    val command = visitCommand(d.command)
+
+    for(i <- 0 until d.args.size-1) {
+      strArgs += d.args(i)._1 + ","
+    }
+    strArgs += d.args(d.args.size-1)._1
+
+    str = "procedure" + d.nome + "(" + strArgs + ")" + "{" + command + "}"
   }
 
 

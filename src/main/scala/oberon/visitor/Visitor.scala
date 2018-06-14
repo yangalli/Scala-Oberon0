@@ -4,7 +4,9 @@ import oberon.expression._
 import oberon.command._
 import oberon.OberonProgram
 import oberon.Func
+import oberon.FuncDef
 import oberon.Proc
+import oberon.ProcDef
 
 trait Visitable {
   def accept(v : Visitor) : Unit
@@ -30,15 +32,17 @@ trait Visitor {
   def visit(e: NotExpression)      : Unit
   def visit(e: VarRef)             : Unit 
   def visit(e: Func)               : Unit
+  def visit(e: FuncDef)            : Unit
 
   def visit(c: BlockCommand)  : Unit
   def visit(c: Assignment)    : Unit
   def visit(c: While)         : Unit
   def visit(c: Print)         : Unit
-  def visit(c: OberonProgram) : Unit 
-  def visit(c: Return)        : Unit 
-  def visit(c: IfThen)        : Unit 
+  def visit(c: OberonProgram) : Unit
+  def visit(c: Return)        : Unit
+  def visit(c: IfThen)        : Unit
   def visit(c: IfThenElse)    : Unit
-  def visit(c: Proc)    : Unit
+  def visit(c: Proc)          : Unit
+  def visit(c: ProcDef)       : Unit
 
 }

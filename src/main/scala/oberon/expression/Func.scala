@@ -7,7 +7,7 @@ import oberon.command._
 import oberon.expression._
 import oberon.Environment._
 
-class Func(nome: String, args: List[Expression]) extends Expression {
+class Func(val nome: String, val args: List[Expression]) extends Expression {
 
   override
   def eval() : Value = {

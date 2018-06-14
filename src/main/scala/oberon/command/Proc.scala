@@ -7,7 +7,7 @@ import oberon.command._
 import oberon.expression._
 import oberon.Environment._
 
-class Proc(nome: String, args: List[Expression]) extends Command {
+class Proc(val nome: String, val args: List[Expression]) extends Command {
   
   override
   def run() : Unit = {
