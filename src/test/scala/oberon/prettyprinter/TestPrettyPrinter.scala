@@ -44,6 +44,66 @@ class TestPrettyPrinter extends FlatSpec with Matchers with GivenWhenThen with B
     pp.str should be ("((5 + 10) + 5)")
   }
 
+  it should "print \"(5 == 5)\" when we call accept in EqExpression" in {
+    val val5_1  = IntValue(5)
+    val val5_2 = IntValue(5)
+    val eq = new EqExpression(val5_1, val5_2)
+
+    val pp = new PrettyPrinter()
+
+    eq.accept(pp)
+
+    pp.str should be ("(5 == 5)")
+  }
+
+  it should "print \"(5 == 10)\" when we call accept in NotEqExpression" in {
+    val val5  = IntValue(5)
+    val val10 = IntValue(10)
+    val n_eq = new NotEqExpression(val5, val10)
+
+    val pp = new PrettyPrinter()
+
+    n_eq.accept(pp)
+
+    pp.str should be ("(5 != 10)")
+  }
+
+  it should "print \"(10 > 5)\" when we call accept in GtExpression" in {
+    val val10 = IntValue(10)
+    val val5  = IntValue(5)
+    val gt = new GtExpression(val10, val5)
+
+    val pp = new PrettyPrinter()
+
+    gt.accept(pp)
+
+    pp.str should be ("(10 > 5)")
+  }
+
+  it should "print \"(5 >= 5)\" when we call accept in GeExpression" in {
+    val val5_1 = IntValue(5)
+    val val5_2  = IntValue(5)
+    val gt_eq = new GeExpression(val5_1, val5_2)
+
+    val pp = new PrettyPrinter()
+
+    gt_eq.accept(pp)
+
+    pp.str should be ("(5 >= 5)")
+  }
+
+  it should "print \"(5 % 5)\" when we call accept in ModExpression" in {
+    val val5_1 = IntValue(5)
+    val val5_2  = IntValue(5)
+    val mod = new ModExpression(val5_1, val5_2)
+
+    val pp = new PrettyPrinter()
+
+    mod.accept(pp)
+
+    pp.str should be ("(5 % 5)")
+  }
+
   it should "print \"!true\" when we call accept in such an expression Not" in {
     val val_true  = BoolValue(true)
     val not = new NotExpression(val_true)
@@ -55,7 +115,7 @@ class TestPrettyPrinter extends FlatSpec with Matchers with GivenWhenThen with B
     pp.str should be ("!true")
   }
 
-  it should "print \"x = 5\" when we call accept in such an expression VarRef" in {
+  it should "print \"x = 5\" when we call accept inVarRef expression" in {
     val val_five = IntValue(5)
     val x = new VarRef("x")
     val oto_x = new Assignment("x", val_five)
@@ -65,7 +125,7 @@ class TestPrettyPrinter extends FlatSpec with Matchers with GivenWhenThen with B
 
     x.accept(pp)
 
-    pp.str should be ("x = 5")
+    pp.str should be ("x := 5")
   }
 
   it should "print \"var x = 5\" when we call accept in such an expression Assign" in {
@@ -97,7 +157,7 @@ class TestPrettyPrinter extends FlatSpec with Matchers with GivenWhenThen with B
     a.run()
     ift.accept(pp)
 
-    pp.str should be ("if(x = 15 > 10){var x = (x = 15 + 1)}")
+    pp.str should be ("if(x := 15 > 10){var x = (x := 15 + 1)}")
   }
 
   it should "print \"FuncDef\" when we call accept in a definition" in {
@@ -117,7 +177,7 @@ class TestPrettyPrinter extends FlatSpec with Matchers with GivenWhenThen with B
     val pp = new PrettyPrinter()
     d1.accept(pp)
 
-    pp.str should be ("functionsum(x,y){return (x = undefined + y = undefined)}")
+    pp.str should be ("functionsum(x,y){return (x := undefined + y := undefined)}")
 
     //f1.accept(pp)
     
@@ -132,7 +192,7 @@ class TestPrettyPrinter extends FlatSpec with Matchers with GivenWhenThen with B
     val pp = new PrettyPrinter()
     b1.accept(pp)
 
-    pp.str should be ("var x = (x = undefined + 1)\nreturn (x = undefined + y = undefined)\n")
+    pp.str should be ("var x = (x := undefined + 1)\nreturn (x := undefined + y := undefined)\n")
     
   }
 

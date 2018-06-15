@@ -92,9 +92,10 @@ class PrettyPrinter extends Visitor {
 
   def visit(e: VarRef): Unit = { 
     val exp = visitExp(new VarRef(e.id).eval())
-    str = e.id.toString + " = " + exp
+    str = e.id.toString + " :" + "= " + exp
     //para ficar melhor tem que mudar aqui
     //mostar so a variavel ou so o valor ?
+    //mostrar o valor como uma referência
   }
 
   def visit(c: BlockCommand)  : Unit = { 
