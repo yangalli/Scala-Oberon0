@@ -125,7 +125,7 @@ class TestPrettyPrinter extends FlatSpec with Matchers with GivenWhenThen with B
 
     x.accept(pp)
 
-    pp.str should be ("x := 5")
+    pp.str should be ("x")
   }
 
   it should "print \"var x = 5\" when we call accept in such an expression Assign" in {
@@ -157,7 +157,7 @@ class TestPrettyPrinter extends FlatSpec with Matchers with GivenWhenThen with B
     a.run()
     ift.accept(pp)
 
-    pp.str should be ("if(x := 15 > 10){var x = (x := 15 + 1)}")
+    pp.str should be ("if(x > 10){var x = (x + 1)}")
   }
 
   it should "print \"FuncDef\" when we call accept in a definition" in {
@@ -177,7 +177,7 @@ class TestPrettyPrinter extends FlatSpec with Matchers with GivenWhenThen with B
     val pp = new PrettyPrinter()
     d1.accept(pp)
 
-    pp.str should be ("functionsum(x,y){return (x := undefined + y := undefined)}")
+    pp.str should be ("functionsum(x,y){return (x + y)}")
 
     //f1.accept(pp)
     
@@ -192,7 +192,7 @@ class TestPrettyPrinter extends FlatSpec with Matchers with GivenWhenThen with B
     val pp = new PrettyPrinter()
     b1.accept(pp)
 
-    pp.str should be ("var x = (x := undefined + 1)\nreturn (x := undefined + y := undefined)\n")
+    pp.str should be ("var x = (x + 1)\nreturn (x + y)\n")
     
   }
 
