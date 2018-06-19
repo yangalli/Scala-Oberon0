@@ -135,6 +135,10 @@ class SimpleRefactor extends Visitor {
 
     str = "procedure" + d.nome + "(" + strArgs + ")" + "{" + command + "}"
   }
+
+  def visit(c: Declaration)       : Unit = { 
+    str = "var " + c.id
+  }  
   
   private def visitExp(e: Expression): String = {
     e.accept(this)

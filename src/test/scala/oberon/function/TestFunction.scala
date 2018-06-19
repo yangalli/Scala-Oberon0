@@ -93,32 +93,32 @@ class TestFunction extends FlatSpec with Matchers with GivenWhenThen with Before
     
   }
 
-  it should "return the correct value with a while command in function declaration" in {
+  // it should "return the correct value with a while command in function declaration" in {
 
-    val ret1 = new AddExpression(new VarRef("x"), new VarRef("soma") )
-    val a3 = new Assignment("soma", new AddExpression(new VarRef("soma"), new VarRef("x")) )
-    // a4 <= x := x + 1;
-    val a4 = new Assignment("x", new AddExpression(new VarRef("x"), IntValue(1)) )
-    // cond <= (x <= 10)
-    val cond = new LeExpression(new VarRef("x"), IntValue(5))
+  //   val ret1 = new AddExpression(new VarRef("x"), new VarRef("soma") )
+  //   val a3 = new Assignment("soma", new AddExpression(new VarRef("soma"), new VarRef("x")) )
+  //   // a4 <= x := x + 1;
+  //   val a4 = new Assignment("x", new AddExpression(new VarRef("x"), IntValue(1)) )
+  //   // cond <= (x <= 10)
+  //   val cond = new LeExpression(new VarRef("x"), IntValue(5))
 
-    val w1 = new While(cond, new BlockCommand(List(a3, a4)) )
-    val fd = new FuncDef("while", List(("x", TInt()), ("y", TInt())), new BlockCommand(List(w1, Return(ret1))) )
+  //   val w1 = new While(cond, new BlockCommand(List(a3, a4)) )
+  //   val fd = new FuncDef("while", List(("x", TInt()), ("y", TInt())), new BlockCommand(List(w1, Return(ret1))) )
     
-    val func1 = new Func("while", List(IntValue(1), IntValue(0)))
+  //   val func1 = new Func("while", List(IntValue(1), IntValue(0)))
 
-    /**********************************************
-    *          def while(x := 1, soma := 0) = {   *
-    *            w1 = while (x <= 5) loop         *
-    *              soma := soma + x;              *
-    *              x := x + 1;                    *
-    *            end loop                         *
-    *           ret soma + x                      *
-    *          }                                  *
-    **********************************************/
+  //   /**********************************************
+  //   *          def while(x := 1, soma := 0) = {   *
+  //   *            w1 = while (x <= 5) loop         *
+  //   *              soma := soma + x;              *
+  //   *              x := x + 1;                    *
+  //   *            end loop                         *
+  //   *           ret soma + x                      *
+  //   *          }                                  *
+  //   **********************************************/
 
-    func1.eval() should be (IntValue(21))
+  //   func1.eval() should be (IntValue(21))
     
-  }
+  // }
 
 }

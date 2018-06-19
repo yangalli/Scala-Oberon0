@@ -44,5 +44,7 @@ trait Visitor {
   def visit(c: IfThenElse)    : Unit
   def visit(c: Proc)          : Unit
   def visit(c: ProcDef)       : Unit
+  
+  def visit(c: Declaration)   : Unit
 
 }

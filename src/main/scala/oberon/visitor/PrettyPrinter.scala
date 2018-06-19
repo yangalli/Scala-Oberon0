@@ -91,7 +91,6 @@ class PrettyPrinter extends Visitor {
   
 
   def visit(e: VarRef): Unit = { 
-    val exp = visitExp(new VarRef(e.id).eval())
     str = e.id
     // colocar só o nome
   }
@@ -143,7 +142,7 @@ class PrettyPrinter extends Visitor {
     }
     strArgs += d.args(d.args.size-1)._1
 
-    str = "function" + d.nome + "(" + strArgs + ")" + "{" + command + "}" 
+    str = "function " + d.nome + "(" + strArgs + ")" + "{" + command + "}" 
   }
 
   def visit(e: Func): Unit = {
@@ -182,14 +181,38 @@ class PrettyPrinter extends Visitor {
     }
     strArgs += d.args(d.args.size-1)._1
 
-    str = "procedure" + d.nome + "(" + strArgs + ")" + "{" + command + "}"
+    str = "procedure " + d.nome + "(" + strArgs + ")" + "{" + command + "}"
   }
 
 
   def visit(c: Print): Unit = ???
 
 
-  def visit(c: OberonProgram): Unit = ???
+  def visit(c: OberonProgram): Unit = {
+    var strArgs = ""
+    val command = visitCommand(c.cmd)
+
+    for(i <- 0 until c.variables.size) {
+      visit(c.variables(i)) 
+      strArgs += str + "\n"
+    }
+
+    for(i <- 0 until c.procDef.size) {
+    visit(c.procDef(i))
+      strArgs += str + "\n"
+    }
+
+    for(i <- 0 until c.funcDef.size) {
+      visit(c.funcDef(i))
+      strArgs += str + "\n"
+    }
+
+    str = "OberonProgram\n" + strArgs + command
+  }
+
+  def visit(c: Declaration): Unit = {
+    str = "var " + c.id
+  }
 
   private def visitBinExp(e: BinExpression) : (String, String) = {
     e.lhs.accept(this)

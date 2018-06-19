@@ -177,7 +177,7 @@ class TestPrettyPrinter extends FlatSpec with Matchers with GivenWhenThen with B
     val pp = new PrettyPrinter()
     d1.accept(pp)
 
-    pp.str should be ("functionsum(x,y){return (x + y)}")
+    pp.str should be ("function sum(x,y){return (x + y)}")
 
     //f1.accept(pp)
     
