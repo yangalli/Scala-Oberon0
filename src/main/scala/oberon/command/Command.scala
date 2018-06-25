@@ -1,5 +1,6 @@
 package oberon.command
 
+import oberon.Error
 import oberon.visitor.Visitable
 import oberon.visitor.Visitor
 
@@ -14,7 +15,9 @@ trait Command extends Visitable {
 case class Return(val expression: Expression) extends Command {
 
   override
-  def run() : Unit = { }
+  def run() : Unit = { 
+    if(!typeCheck()) throw Error("Bad type error")
+  }
 
   // o typeCheck deve ser feito com base no tipo de saida da funcao
   override
@@ -29,6 +32,7 @@ class BlockCommand(val cmds: List[Command]) extends Command {
 
   override
   def run() : Unit = {
+    if(!typeCheck()) throw Error("Bad type error")
     cmds.foreach(c => c.run())
   }
 
@@ -44,6 +48,7 @@ class Assignment(val id: String, val expression: Expression) extends Command {
 
   override
   def run() : Unit = {
+    if(!typeCheck()) throw Error("Bad type error")
     map(id, expression.eval())
   }
 
@@ -59,6 +64,7 @@ class While(val cond: Expression, val command: Command) extends Command {
   
   override
   def run() : Unit = {
+    if(!typeCheck()) throw Error("Bad type error")
     val v = cond.eval.asInstanceOf[BoolValue]
 
     v match {

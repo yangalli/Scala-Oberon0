@@ -12,6 +12,8 @@ class Func(val nome: String, val args: List[Expression]) extends Expression {
   override
   def eval() : Value = {
 
+    if(!typeCheck()) throw Error("Bad type error")
+
     // defines the scope by the function name
     val define = lookupDef(nome)
 
@@ -45,6 +47,8 @@ class Func(val nome: String, val args: List[Expression]) extends Expression {
   override
   def calculateType() : Type = {
 
+    push
+
     // defines the scope by the function name
     val define = lookupDef(nome)
 
@@ -53,20 +57,31 @@ class Func(val nome: String, val args: List[Expression]) extends Expression {
       if (tipo != args(i).calculateType()) return TUndefined()
 
     }
-    var res: Value = Undefined()
+
+    for (i <- 0 until args.size) {
+
+      val(variable, tipo) = define.args(i)
+
+      new Assignment(variable, args(i)).run()
+    }
+    
+    var res: Type = TUndefined()
     define.command match {
       // if there is a Return in the scope, then it's expression is evaluated
       case e: Return => {
-       if (!e.typeCheck()) return TUndefined()
-       else return e.expression.calculateType()
+       if (e.expression.calculateType() != define.tipo) res = TUndefined()
+       else res = e.expression.calculateType()
       } 
       // if there is a BlockCommmand in the scope of the function, the Return is the last command
       // in the Stack pile, and it's expression is evaluated as an instance of Return
       case c: BlockCommand => {
-        if (!c.cmds.last.asInstanceOf[Return].typeCheck()) return TUndefined()
-        else return c.cmds.last.asInstanceOf[Return].expression.calculateType()
+        if (c.cmds.last.asInstanceOf[Return].expression.calculateType() != define.tipo) res = TUndefined()
+        else res = c.cmds.last.asInstanceOf[Return].expression.calculateType()
       }
     }
+
+    pop
+    res
   }
 
   override def accept(v : Visitor) {

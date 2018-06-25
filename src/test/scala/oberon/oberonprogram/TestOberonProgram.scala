@@ -25,7 +25,7 @@ class TestOberonProgram extends FlatSpec with Matchers with GivenWhenThen with B
   it should "have an oberon program working correctly" in {
 
     val r1 = new AddExpression(new VarRef("x"), new VarRef("y"))
-    val d1 = new FuncDef("sum", List(("x", TInt()), ("y", TInt())), Return(r1))
+    val d1 = new FuncDef(TInt(), "sum", List(("x", TInt()), ("y", TInt())), Return(r1))
 
     val a1  = new Declaration("res")
     val a2  = new AddExpression(new VarRef("x"), new VarRef("y"))
