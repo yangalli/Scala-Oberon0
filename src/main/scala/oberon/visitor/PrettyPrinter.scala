@@ -140,7 +140,7 @@ class PrettyPrinter extends Visitor {
     for(i <- 0 until d.args.size-1) {
       strArgs += d.args(i)._1 + ","
     }
-    strArgs += d.args(d.args.size-1)._1
+    strArgs += d.args.last._1
 
     str = "function " + d.nome + "(" + strArgs + ")" + "{" + command + "}" 
   }
@@ -153,7 +153,7 @@ class PrettyPrinter extends Visitor {
     for(i <- 0 until define.args.size-1) {
       strArgs += define.args(i)._1 + ","
     }
-    strArgs += define.args(define.args.size-1)._1
+    strArgs += define.args.last._1
 
     str = "function" + define.nome + "(" + strArgs + ")" + "{" + command + "}"
   }
@@ -167,7 +167,7 @@ class PrettyPrinter extends Visitor {
     for(i <- 0 until define.args.size-1) {
       strArgs += define.args(i)._1 + ","
     }
-    strArgs += define.args(define.args.size-1)._1
+    strArgs += define.args.last._1
 
     str = "function" + define.nome + "(" + strArgs + ")" + "{" + command + "}"
   }
@@ -179,7 +179,7 @@ class PrettyPrinter extends Visitor {
     for(i <- 0 until d.args.size-1) {
       strArgs += d.args(i)._1 + ","
     }
-    strArgs += d.args(d.args.size-1)._1
+    strArgs += d.args.last._1
 
     str = "procedure " + d.nome + "(" + strArgs + ")" + "{" + command + "}"
   }

@@ -16,7 +16,7 @@ class Func(val nome: String, val args: List[Expression]) extends Expression {
     val define = lookupDef(nome)
 
     push()
-    //args.foreach(a._1 => new Assignment(define.args(args.indexOf(a)), a).run())
+
     for (i <- 0 until args.size) {
 
       val(variable, tipo) = define.args(i)
@@ -51,7 +51,6 @@ class Func(val nome: String, val args: List[Expression]) extends Expression {
     for (i <- 0 until args.size) {
       val(variable, tipo) = define.args(i)
       if (tipo != args(i).calculateType()) return TUndefined()
-      //(variable, args(i)).run()
 
     }
     var res: Value = Undefined()
